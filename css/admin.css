@@ -1,0 +1,93 @@
+/* line 1, header-store.scss */
+.container-header {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+}
+/* line 4, header-store.scss */
+.container-header .wrap-page {
+  max-width: 1200px;
+  margin: 0px auto;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+/* line 10, header-store.scss */
+.container-header .wrap-page .img-logo {
+  display: flex;
+  align-items: center;
+  height: inherit;
+}
+/* line 14, header-store.scss */
+.container-header .wrap-page .img-logo img {
+  width: 84px;
+}
+
+.container-menu {
+  align-self: center;
+}
+
+.item-form {
+  width: 100%;
+  padding: 10px 30px;
+  position: relative;
+}
+/* line 50, log.scss */
+.item-form input,
+.item-form textarea {
+  width: 100%;
+  padding: 12px 10px;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: text;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #495057;
+  background-color: #cccc;
+  background-clip: padding-box;
+}
+
+.sub-text {
+  text-align: center;
+}
+
+.menu-list {
+  display: flex;
+  align-items: center;
+  margin: unset;
+}
+
+.menu-list li {
+  padding: 20px;
+}
+
+.main-page {
+  background-color: #f4f4f4;
+}
+
+.container-wrap {
+  padding: 30px;
+}
+
+.main-page .wrap-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.wrap-gr-btn {
+  padding-left: 15px;
+}
+
+.wrap-img {
+  width: 300px;
+  height: 300px;
+  border: 1px solid #000;
+}
+
+#myimg {
+  width: 100%;
+  object-fit: cover;
+}
