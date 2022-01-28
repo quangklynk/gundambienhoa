@@ -100,9 +100,6 @@
           <button id="upbtn" type="button" class="btn btn-success">
             Upload dữ liệu
           </button>
-          <button id="getbtn" type="button" class="btn btn-info">
-            Lấy hình theo tên
-          </button>
         </div>
       </div>
     </main>
@@ -154,7 +151,6 @@
 
       var SelBtn = document.getElementById("selbtn");
       var UpBtn = document.getElementById("upbtn");
-      var GetBtn = document.getElementById("getbtn");
 
       var input = document.createElement("input");
       input.type = "file";
@@ -282,7 +278,6 @@
       }
 
       UpBtn.onclick = UploadProcess;
-      GetBtn.onclick = GetURLRealtimeDB;
     </script>
 
     <script>
