@@ -91,3 +91,11 @@
   width: 100%;
   object-fit: cover;
 }
+
+.set-padding {
+  padding: 20px 0;
+}
+
+.set-img{
+  width: 200px;
+}

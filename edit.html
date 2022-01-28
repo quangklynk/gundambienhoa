@@ -50,7 +50,7 @@
           <div class="container-menu">
             <ul class="menu-list">
               <li>
-                <a href=""> Thêm hàng </a>
+                <a href="index.html"> Thêm hàng </a>
               </li>
               <li>
                 <a href="list.html"> Danh sách hàng </a>
@@ -67,7 +67,18 @@
       <div class="container">
         <div class="row container-wrap">
           <div class="col-sm wrap-box">
-            <h3>Thêm mới</h3>
+            <h3>Chỉnh sửa</h3>
+            <div class="item-form">
+              <select
+                class="form-control"
+                name=""
+                id="idpro"
+                placeholder="Chọn mã hàng"
+              >
+                <option value="">Chọn sản phẩm</option>
+              </select>
+              <small class="sub-text">(*Chọn sản phẩm)</small>
+            </div>
             <div class="item-form">
               <input id="nameproduct" type="text" placeholder="Nhập tên mẫu" />
             </div>
@@ -80,9 +91,9 @@
               />
             </div>
             <div class="item-form">
-              <input type="text" id="namebox" placeholder="Tên hình" />
+              <input disabled type="text" id="namebox" placeholder="Tên hình" />
               <label for="" id="extlab"></label>
-              <small class="sub-text">(* đặt lại tên nếu muốn)</small>
+              <small class="sub-text">(* Không được phép sửa hình)</small>
             </div>
           </div>
           <div class="col-sm">
@@ -94,15 +105,10 @@
           </div>
         </div>
         <div class="wrap-gr-btn">
-          <button id="selbtn" type="button" class="btn btn-primary">
-            Chọn hình
-          </button>
           <button id="upbtn" type="button" class="btn btn-success">
             Upload dữ liệu
           </button>
-          <button id="getbtn" type="button" class="btn btn-info">
-            Lấy hình theo tên
-          </button>
+          <button id="delbtn" type="button" class="btn btn-danger">Xóa</button>
         </div>
       </div>
     </main>
@@ -127,7 +133,10 @@
         ref as sRef,
         uploadBytesResumable,
         getDownloadURL,
+        deleteObject,
       } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-storage.js";
+
+      const storage = getStorage();
 
       import {
         getDatabase,
@@ -151,43 +160,13 @@
       var proglab = document.getElementById("upprogress");
       var name_pro = document.getElementById("nameproduct");
       var price = document.getElementById("price");
+      var idpro = document.getElementById("idpro");
 
-      var SelBtn = document.getElementById("selbtn");
+      var DelBtn = document.getElementById("delbtn");
       var UpBtn = document.getElementById("upbtn");
-      var GetBtn = document.getElementById("getbtn");
-
-      var input = document.createElement("input");
-      input.type = "file";
-
-      input.onchange = (e) => {
-        file = e.target.files;
-
-        var extention = GetFileExt(file[0]);
-        var name = GetFileName(file[0]);
-
-        namebox.value = name;
-        extlab.innerHTML = extention;
-
-        reader.readAsDataURL(file[0]);
-      };
 
       reader.onload = function () {
         myimg.src = reader.result;
-      };
-
-      function GetFileExt(file) {
-        var temp = file.name.split(".");
-        var ext = temp.slice(temp.length - 1, temp.length);
-        return "." + ext[0];
-      }
-      function GetFileName(file) {
-        var temp = file.name.split(".");
-        var fname = temp.slice(0, -1).join(".");
-        return fname;
-      }
-
-      SelBtn.onclick = function () {
-        input.click();
       };
 
       async function UploadProcess() {
@@ -242,15 +221,17 @@
         });
       }
       function GetURLRealtimeDB(URL) {
-        var name = namebox.value;
+        var name = idpro.value;
 
         var dbRef = ref(realdb);
 
         get(child(dbRef, "Gundams/" + name)).then((snapshot) => {
           if (snapshot.exists()) {
+            console.log(snapshot.val());
             myimg.src = snapshot.val().ImgUrl;
             name_pro.value = snapshot.val().name;
             price.value = snapshot.val().price;
+            namebox.value = snapshot.val().ImageName;
           }
         });
       }
@@ -258,31 +239,93 @@
       function GetAllData() {
         const dbRef = ref(realdb);
 
-        var listgundam = [];
-
         get(child(dbRef, "Gundams")).then((snapshot) => {
           snapshot.forEach((element) => {
-            listgundam.push(element.val().id);
+            var opt = document.createElement("option");
+            opt.value = element.val().id;
+            opt.innerHTML = element.val().name;
+            idpro.appendChild(opt);
           });
         });
-        return genID(listgundam);
       }
 
-      function genID(list) {
-        let length = list.length + 1;
-        let id_new;
-        while (list.length < length) {
-          var r = Math.floor(Math.random() * 100) + 1;
-          if (list.indexOf(r) === -1) {
-            list.push(r);
-            id_new = r;
-          }
+      function deleteData() {
+        let key, link;
+        key = idpro.value;
+        link = namebox.value;
+        if (!key || !link) {
+          alert("chọn sản phẩm trước");
+          return;
         }
-        return id_new;
+
+        let check = confirm("Bạn có muốn xóa");
+
+        if (check) {
+          remove(ref(realdb, "Gundams/" + key))
+            .then((result) => {
+              console.log(result);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
+          // Create a reference to the file to delete
+          link = "Images/" + link;
+          const desertRef = sRef(storage, link);
+
+          // Delete the file
+          deleteObject(desertRef)
+            .then(() => {
+              // File deleted successfully
+
+              alert("Xóa ok");
+              location.reload();
+            })
+            .catch((error) => {
+              // Uh-oh, an error occurred!
+              console.log(error);
+            });
+        } else {
+          return;
+        }
       }
 
-      UpBtn.onclick = UploadProcess;
-      GetBtn.onclick = GetURLRealtimeDB;
+      function UpdateData() {
+        let key;
+        key = idpro.value;
+        if (!key) {
+          alert("Vui lòng chọn sản phẩm");
+          return;
+        }
+        if (price.value === "" || name_pro.value === "") {
+          alert("Vui lòng nhập đầy đủ");
+          return;
+        }
+
+        let check = confirm("Bạn có muốn sửa");
+
+        if (check) {
+          update(ref(realdb, "Gundams/" + key), {
+            name: name_pro.value,
+            price: price.value,
+          })
+            .then((result) => {
+              alert("Sửa thành công");
+              location.reload();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          return;
+        }
+      }
+
+      window.onload = GetAllData();
+
+      UpBtn.onclick = UpdateData;
+      DelBtn.onclick = deleteData;
+      idpro.onchange = GetURLRealtimeDB;
     </script>
 
     <script>
