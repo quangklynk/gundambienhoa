@@ -80,9 +80,22 @@
               />
             </div>
             <div class="item-form">
+              <input
+                type="text"
+                id="deposit"
+                placeholder="Nhập cọc"
+                onkeypress="return onlyNumberKey(event)"
+              />
+            </div>
+            <div class="item-form">
               <input type="text" id="namebox" placeholder="Tên hình" />
               <label for="" id="extlab"></label>
               <small class="sub-text">(* đặt lại tên nếu muốn)</small>
+            </div>
+            <div class="item-form">
+              <label for="statuscheck" class="label-check">
+                Slot: <input type="checkbox" checked id="statuscheck"
+              /></label>
             </div>
           </div>
           <div class="col-sm">
@@ -148,6 +161,8 @@
       var proglab = document.getElementById("upprogress");
       var name_pro = document.getElementById("nameproduct");
       var price = document.getElementById("price");
+      var deposit = document.getElementById("deposit");
+      var statuscheck = document.getElementById("statuscheck");
 
       var SelBtn = document.getElementById("selbtn");
       var UpBtn = document.getElementById("upbtn");
@@ -235,6 +250,8 @@
           ImgUrl: URL,
           name: name_pro.value,
           price: price.value,
+          deposit: deposit.value,
+          status: statuscheck.checked,
         });
       }
       function GetURLRealtimeDB(URL) {

@@ -68,7 +68,7 @@
 }
 
 .container-wrap {
-  padding: 30px;
+  padding: 25px;
 }
 
 .main-page .wrap-box {
@@ -96,6 +96,17 @@
   padding: 20px 0;
 }
 
-.set-img{
+.set-img {
   width: 200px;
+}
+
+#statuscheck {
+  width: unset;
+  display: inline;
+}
+
+
+.label-check {
+  display: block;
+  cursor: pointer;
 }

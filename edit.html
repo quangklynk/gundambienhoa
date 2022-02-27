@@ -91,24 +91,41 @@
               />
             </div>
             <div class="item-form">
+              <input
+                type="text"
+                id="deposit"
+                placeholder="Nhập cọc"
+                onkeypress="return onlyNumberKey(event)"
+              />
+            </div>
+            <div class="item-form">
+              <label for="statuscheck" class="label-check">
+                Slot: <input type="checkbox" id="statuscheck"
+              /></label>
+            </div>
+            <div class="item-form">
               <input disabled type="text" id="namebox" placeholder="Tên hình" />
               <label for="" id="extlab"></label>
               <small class="sub-text">(* Không được phép sửa hình)</small>
             </div>
           </div>
           <div class="col-sm">
-            <div class="wrap-img">
-              <img src="" alt="" id="myimg" />
-              <!-- <small class="sub-text">(* nơi ảnh upload lên)</small> -->
+            <div>
+              <div class="wrap-img">
+                <img src="" alt="" id="myimg" />
+                <!-- <small class="sub-text">(* nơi ảnh upload lên)</small> -->
+              </div>
+              <label for="" id="upprogress"></label>
             </div>
-            <label for="" id="upprogress"></label>
+            <div class="wrap-gr-btn for-edit">
+              <button id="upbtn" type="button" class="btn btn-success">
+                Upload dữ liệu
+              </button>
+              <button id="delbtn" type="button" class="btn btn-danger">
+                Xóa
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="wrap-gr-btn">
-          <button id="upbtn" type="button" class="btn btn-success">
-            Upload dữ liệu
-          </button>
-          <button id="delbtn" type="button" class="btn btn-danger">Xóa</button>
         </div>
       </div>
     </main>
@@ -161,6 +178,8 @@
       var name_pro = document.getElementById("nameproduct");
       var price = document.getElementById("price");
       var idpro = document.getElementById("idpro");
+      var deposit = document.getElementById("deposit");
+      var statuscheck = document.getElementById("statuscheck");
 
       var DelBtn = document.getElementById("delbtn");
       var UpBtn = document.getElementById("upbtn");
@@ -218,6 +237,8 @@
           ImgUrl: URL,
           name: name_pro.value,
           price: price.value,
+          deposit: deposit.value,
+          status: statuscheck.checked,
         });
       }
       function GetURLRealtimeDB(URL) {
@@ -232,6 +253,8 @@
             name_pro.value = snapshot.val().name;
             price.value = snapshot.val().price;
             namebox.value = snapshot.val().ImageName;
+            deposit.value = snapshot.val().deposit;
+            statuscheck.checked = snapshot.val().status;
           }
         });
       }

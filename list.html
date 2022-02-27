@@ -66,6 +66,8 @@
             <th>Tên</th>
             <th>Giá</th>
             <th>Tên Hình</th>
+            <th>Cọc</th>
+            <th>Trạng thái</th>
             <th>Hình</th>
           </thead>
           <tbody id="bodytable"></tbody>
@@ -101,7 +103,7 @@
       const realdb = getDatabase();
 
       var tbody = document.getElementById("bodytable");
-      function AddItemToTable(id, name, price, img, url) {
+      function AddItemToTable(id, name, price, img, url, deposit, status) {
         let trow = document.createElement("tr");
 
         let td0 = document.createElement("td");
@@ -109,6 +111,8 @@
         let td2 = document.createElement("td");
         let td3 = document.createElement("td");
         let td4 = document.createElement("td");
+        let td5 = document.createElement("td");
+        let td6 = document.createElement("td");
         let contentHTML = `
           <img src="${url}" alt="" class="img-thumbnail set-img">
           `;
@@ -116,13 +120,17 @@
         td1.innerHTML = name;
         td2.innerHTML = price;
         td3.innerHTML = img;
-        td4.innerHTML = contentHTML;
+        td4.innerHTML = deposit;
+        td5.innerHTML = status == true ? 'Còn' : 'Hết';
+        td6.innerHTML = contentHTML;
 
         trow.appendChild(td0);
         trow.appendChild(td1);
         trow.appendChild(td2);
         trow.appendChild(td3);
         trow.appendChild(td4);
+        trow.appendChild(td5);
+        trow.appendChild(td6);
 
         tbody.appendChild(trow);
       }
@@ -135,6 +143,8 @@
             element.price,
             element.ImageName,
             element.ImgUrl,
+            element.deposit,
+            element.status
           );
         });
       }
@@ -153,7 +163,6 @@
       }
 
       window.onload = GetAllData();
-
     </script>
     <script>
       function deleteGundam(key, link) {
