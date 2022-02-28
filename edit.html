@@ -263,10 +263,27 @@
         const dbRef = ref(realdb);
 
         get(child(dbRef, "Gundams")).then((snapshot) => {
+          var listgundam = [];
           snapshot.forEach((element) => {
+            listgundam.push(element.val());
+            // var opt = document.createElement("option");
+            // opt.value = element.val().id;
+            // opt.innerHTML = element.val().name;
+            // idpro.appendChild(opt);
+          });
+          listgundam.sort(function (a, b) {
+            if (a.name < b.name) {
+              return -1;
+            }
+            if (a.name > b.name) {
+              return 1;
+            }
+            return 0;
+          });
+          listgundam.forEach((element) => {
             var opt = document.createElement("option");
-            opt.value = element.val().id;
-            opt.innerHTML = element.val().name;
+            opt.value = element.id;
+            opt.innerHTML = element.name;
             idpro.appendChild(opt);
           });
         });
