@@ -234,9 +234,10 @@
             getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
               SaveURLRealtimeDB(downloadURL);
             });
-            location.reload();
+          
           }
         );
+          location.reload();
       }
 
       function SaveURLRealtimeDB(URL) {
