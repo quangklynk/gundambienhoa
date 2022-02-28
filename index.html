@@ -234,7 +234,6 @@
             getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
               SaveURLRealtimeDB(downloadURL);
             });
-            location.reload();
           }
         );
       }
@@ -253,7 +252,12 @@
           price: price.value,
           deposit: deposit.value,
           status: statuscheck.checked,
-        });
+        })
+          .then((result) => {
+            alert("ok");
+            location.reload();
+          })
+          .catch((err) => {});
       }
       function GetURLRealtimeDB(URL) {
         var name = namebox.value;
