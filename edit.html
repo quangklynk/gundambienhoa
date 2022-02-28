@@ -28,7 +28,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/admin.css" />
-
+    <link
+      href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
@@ -130,6 +133,7 @@
       </div>
     </main>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
@@ -294,7 +298,12 @@
         key = idpro.value;
         link = namebox.value;
         if (!key || !link) {
-          alert("chọn sản phẩm trước");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "chọn sản phẩm trước",
+            timer: 1500,
+          });
           return;
         }
 
@@ -318,7 +327,22 @@
             .then(() => {
               // File deleted successfully
 
-              alert("Xóa ok");
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener("mouseenter", Swal.stopTimer);
+                  toast.addEventListener("mouseleave", Swal.resumeTimer);
+                },
+              });
+
+              Toast.fire({
+                icon: "success",
+                title: "Xóa ok dòi anh",
+              });
               location.reload();
             })
             .catch((error) => {
@@ -334,11 +358,21 @@
         let key;
         key = idpro.value;
         if (!key) {
-          alert("Vui lòng chọn sản phẩm");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Vui lòng chọn sản phẩm",
+            timer: 1500,
+          });
           return;
         }
         if (price.value === "" || name_pro.value === "") {
-          alert("Vui lòng nhập đầy đủ");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Vui lòng nhập đầy đủ",
+            timer: 1500,
+          });
           return;
         }
 
@@ -350,7 +384,12 @@
             price: price.value,
           })
             .then((result) => {
-              alert("Sửa thành công");
+              Swal.fire({
+                icon: "success",
+                title: "Ok luôn rồi nha anh",
+                showConfirmButton: false,
+                timer: 1500,
+              });
               location.reload();
             })
             .catch((err) => {
