@@ -238,11 +238,11 @@
         );
       }
 
-      function SaveURLRealtimeDB(URL) {
+      async function SaveURLRealtimeDB(URL) {
         var name = namebox.value;
         var ext = extlab.innerHTML;
 
-        var id = GetAllData();
+        var id = await GetAllData();
 
         set(ref(realdb, "Gundams/" + id), {
           id: id,
@@ -261,26 +261,13 @@
             alert("lỗi");
           });
       }
-      function GetURLRealtimeDB(URL) {
-        var name = namebox.value;
 
-        var dbRef = ref(realdb);
-
-        get(child(dbRef, "Gundams/" + name)).then((snapshot) => {
-          if (snapshot.exists()) {
-            myimg.src = snapshot.val().ImgUrl;
-            name_pro.value = snapshot.val().name;
-            price.value = snapshot.val().price;
-          }
-        });
-      }
-
-      function GetAllData() {
+      async function GetAllData() {
         const dbRef = ref(realdb);
 
         var listgundam = [];
 
-        get(child(dbRef, "Gundams")).then((snapshot) => {
+        await get(child(dbRef, "Gundams")).then((snapshot) => {
           snapshot.forEach((element) => {
             listgundam.push(element.val().id);
           });
@@ -289,15 +276,7 @@
       }
 
       function genID(list) {
-        let length = list.length + 1;
-        let id_new;
-        while (list.length < length) {
-          var r = Math.floor(Math.random() * 100) + 1;
-          if (list.indexOf(r) === -1) {
-            list.push(r);
-            id_new = r;
-          }
-        }
+        let id_new = list[list.length - 1] + 1;
         return id_new;
       }
 

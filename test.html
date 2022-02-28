@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+
+    <script>
+      function genID(list, index) {
+        let length = list.length + 1;
+        let id_new;
+        while (list.length < length) {
+          var r = Math.floor(Math.random() * 100) + 1;
+          if (list.indexOf(r) === -1) {
+            list.push(r);
+            id_new = r;
+            console.log("ramdom" + index + " : " + r);
+            return id_new;
+          }
+        }
+      }
+
+      var list = [];
+
+      for (let index = 0; index < 100; index++) {
+        genID(list, index);
+        console.log(list);
+      }
+    </script>
+  </body>
+</html>
