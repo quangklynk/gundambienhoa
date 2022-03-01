@@ -382,6 +382,8 @@
           update(ref(realdb, "Gundams/" + key), {
             name: name_pro.value,
             price: price.value,
+            deposit: deposit.value,
+            status: statuscheck.value,
           })
             .then((result) => {
               Swal.fire({
