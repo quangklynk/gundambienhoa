@@ -79,7 +79,7 @@
                 type="text"
                 id="price"
                 placeholder="Nhập giá"
-                onkeypress="return onlyNumberKey(event)"
+                onkeypress="onlyNumberKey(event)"
               />
             </div>
             <div class="item-form">
@@ -87,7 +87,7 @@
                 type="text"
                 id="deposit"
                 placeholder="Nhập cọc"
-                onkeypress="return onlyNumberKey(event)"
+                onkeypress="onlyNumberKey(event)"
               />
             </div>
             <div class="item-form">
@@ -124,13 +124,15 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
       const firebaseConfig = {
-        apiKey: "AIzaSyDBbl1U3Pw6xWwcDrF2kPfcYc75y9r3fHY",
-        authDomain: "gundambienhoa.firebaseapp.com",
-        projectId: "gundambienhoa",
-        storageBucket: "gundambienhoa.appspot.com",
-        messagingSenderId: "37146655618",
-        appId: "1:37146655618:web:b28f947a18e380007bad9b",
-        measurementId: "G-64Z8553Z8Y",
+        apiKey: "AIzaSyAzkLWAjcgySqf46yRmFGJvnUfIhN9Vd-g",
+        authDomain: "gundambienhoa-4c350.firebaseapp.com",
+        databaseURL:
+          "https://gundambienhoa-4c350-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "gundambienhoa-4c350",
+        storageBucket: "gundambienhoa-4c350.appspot.com",
+        messagingSenderId: "800213288761",
+        appId: "1:800213288761:web:8d9eac052bcbfbeca98ae8",
+        measurementId: "G-G99758YFLX",
       };
 
       const app = initializeApp(firebaseConfig);
@@ -246,6 +248,7 @@
         var ext = extlab.innerHTML;
 
         var id = await GetAllData();
+        console.log(id);
 
         set(ref(realdb, "Gundams/" + id), {
           id: id,
@@ -294,7 +297,12 @@
       }
 
       function genID(list) {
-        let id_new = list[list.length - 1] + 1;
+        let id_new;
+        if (list.length !== 0) {
+          id_new = list[list.length - 1] + 1;
+        } else {
+          id_new = 1;
+        }
         return id_new;
       }
 
